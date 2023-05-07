@@ -15,22 +15,22 @@ export default class Game {
 
   setup() {
     var camera = new ArcRotateCamera("camera", 0, 0, 10, new Vector3(0, 0, 0), this.scene);
-    camera.setPosition(new Vector3(0, 0, -10));
+    camera.setPosition(new Vector3(40, 40, -50));
     camera.attachControl(this.canvas, true);
-
-    //TESTING onPointerObservable - returns null/false
-    this.scene.onPointerObservable.add((pointerInfo) => {
-      console.log("inside onPointerObservable - this.scene:", this.scene);
-      console.log(pointerInfo.type);
-      console.log(pointerInfo.pickInfo.hit);
-    });
 
     // SETTING UP SCENE
     var light = new HemisphericLight("light1", new Vector3(0, 1, 0), this.scene);
     light.intensity = 0.7;
-    let ground = MeshBuilder.CreateGround("ground", { width: 5, height: 5 });
+
+    let ground = MeshBuilder.CreateGround("ground1", { width: 50, height: 50, subdivisions: 2 }, this.scene);
     ground.position.y -= 1;
-    MeshBuilder.CreateSphere("Sphere", { diameter: 1 });
+
+    //TESTING onPointerObservable - returns null/false
+    this.scene.onPointerObservable.add((pointerInfo) => {
+      console.log(pointerInfo.pickInfo.hit);
+      console.log(pointerInfo.type);
+      console.log(pointerInfo.pickInfo.pickedMesh);
+    });
   }
 
   run() {
